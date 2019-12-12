@@ -69,7 +69,8 @@ class SvcClassifition:
             time1 = int(dic2['time']) - int(dic1['time'])
             time2 = int(dic3['time']) - int(dic2['time'])
 
-        source = 1 if dic1['source'] == dic2['source'] else -1
+        source1 = 1 if dic1['source'] != '300' else -1
+        source2 = 1 if dic2['source'] != '300' else -1
         lon1 = (dic2['lon'] - dic1['lon']) * 10000
         lat1 = (dic2['lat'] - dic1['lat']) * 10000
         lon2 = (dic3['lon'] - dic2['lon']) * 10000
@@ -89,7 +90,7 @@ class SvcClassifition:
         last_is_ture = 1 if flag == 1 else -1
         # if
         # [time1, time2, source, lon1, lat1, lon2, lat2, ang1, ang2, thead1, thead2, thead3, thead4, sog1, sog2, sog3, cog1, cog2, cog3, last_is_ture]
-        return [time1,time2,source,lon1,lat1,lon2,lat2,ang1,ang2,thead1,thead2,thead3,thead4,sog1,sog2,sog3,cog1,cog2,cog3,last_is_ture]
+        return [time1,time2,source1,source2,lon1,lat1,lon2,lat2,ang1,ang2,thead1,thead2,thead3,thead4,sog1,sog2,sog3,cog1,cog2,cog3,last_is_ture]
 
     @staticmethod
     def get_second(string):

@@ -27,6 +27,8 @@ class HbaseZS:
         # timeStamp = int(time.mktime(threeDayAgo.timetuple()))
         # 转换为其他字符串格式
         bg = threeDayAgo.strftime("%Y-%m-%d %H:%M:%S")
+        bg = '2019-12-01 00:00:00'
+        ed = '2019-12-10 00:00:00'
         bg = BTime.from_str(bg)
         ed = BTime.from_str(ed)
 
@@ -62,19 +64,19 @@ class HbaseZS:
 
 
 if __name__ == '__main__':
-    # import os,sys
-    # sys.path.append(r'D:\shentong\shiptracker_python\hd_packages\src')
-    # from hd_utils.time_util import *
-    # from hd_utils.hbase_util  import HbaseShipPos
-    # import string
-    # import time,datetime
-    # from hbase_out.excel_use import *
+    import os,sys
+    sys.path.append(r'D:\shentong\shiptracker_python\hd_packages\src')
+    from hd_utils.time_util import *
+    from hd_utils.hbase_util  import HbaseShipPos
+    import string
+    import time,datetime
+    from hbase_out.excel_use import *
     #
     #
     #
     #
-    # # bg = time_util.BTime.from_str("2019-11-13 13:14:00")
-    # # ed = time_util.BTime.from_str("2019-12-02 11:00:00")
+    bg = time_util.BTime.from_str("2019-11-13 13:14:00")
+    ed = time_util.BTime.from_str("2019-12-02 11:00:00")
     # # print(bg)
     # # print(type(bg))
     # ed = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -90,13 +92,15 @@ if __name__ == '__main__':
     #
     #
     #
-    # a = HbaseShipPos("192.168.29.2", "8080")
-    #
+    a = HbaseShipPos("192.168.29.2", "8080")
+
     # #
     # # data=['3744240001575853080','3744240001575840000','3744240001575830160','3744240001575825120','3744240001575797880','3744240001575751560','3744240001575748560','3744240001575744240','3744240001575700560','3744240001575678840','3744240001575661080','3744240001575657000','3744240001575622800','3744240001575580680','3744240001575578640','3744240001575535200']
     mmsi_list = [477752100, 477752200, 477181700, 477942400, 477454300, 477548400, 477167300, 414436000, 477150500, 413828000, 565003000, 574375000, 419001327, 477686500,
                 372632000, 636015455, 538004459, 564290000, 538004367, 538004243, 477264400, 477435100, 353242000, 563077300,419001333]
 
+    for row in a.get(477752100,bg,ed):
+        print(row)
 
     #写入excel
     # value_title = [["time", "time2","source", "lon1", "lon2", "ang1","ang2","thead1","thead2","thead3","thead4","sog1",\
@@ -111,11 +115,11 @@ if __name__ == '__main__':
     #         print(row)
             # res = [[row['mmsi'],row['trueHeading'],row['latitude'],row['longitude'],row['sog'],row['source'],row['rot'],row['cog'],row['time']]]
     #         b.write_excel_xls_append(book_name_xls, res)
-    zs = HbaseZS()
-
-
-    for mmsi in mmsi_list:
-        r = zs.get_data_from_zs(mmsi)
-        print(r)
+    # zs = HbaseZS()
+    #
+    #
+    # for mmsi in mmsi_list:
+    #     r = zs.get_data_from_zs(mmsi)
+    #     print(r)
 
 

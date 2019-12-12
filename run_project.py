@@ -3,6 +3,7 @@ from hbase_out.hbase_outport import *
 from hbase_out.hbase_zhengshi import *
 from drawmap.map import *
 import os
+from sklearn.externals import joblib
 model_path = os.path.join(os.getcwd(),r"svm_classification\2.model")
 m = Map()
 hbase_out = HbaseZS()
@@ -34,18 +35,19 @@ for i in mmsi_list:
 
         # point_list = sorted(point_dic['time'])
         # print(point_list)
-        start = 55
-        end = 60
+        start = 18
+        end = 25
         index_list = list(i[0]-start for i in list(enumerate(point_dic['predict'])) if i[1] == 1)
         zhixin_list = list()
-        for i in index_list:
-            zhixin_list.append(point_dic['zhixin'][i])
-        print(zhixin_list)
+        # for i in index_list:
+        #     zhixin_list.append(point_dic['zhixin'][i])
+        # print(point_dic['zhixin'])
         m.draw_point(point_list[start:end],index_list)
         for i in res[start:end]:
             print('time:%s  lon:%s  lat:%s' % (i['time'],i['longitude'],i['latitude']))
-        print([i-start for i in  index_list if i in range(start,end)])
-        # print(res_list[0:4])
+        print(index_list)
+        # print([i-start for i in  index_list if i in range(start,end)])
+        print(res[start:end])
         m.draw_line(point_list[start:end],index_list)
         m.show()
         break

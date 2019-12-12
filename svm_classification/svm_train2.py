@@ -20,7 +20,7 @@ import sys
 import os
 last_path = os.path.dirname(os.getcwd())
 sys.path.append(os.path.join(last_path,'labeldata'))
-from get_data import *
+from get_data2 import *
 
 warnings.filterwarnings("ignore", category=FutureWarning, module="sklearn", lineno=193)
 
@@ -106,7 +106,7 @@ def ml_svc(X, y):
 
     #
     # # 保存模型
-    with open( '4.model', 'wb') as f:
+    with open( '201.model', 'wb') as f:
         pickle.dump(model, f)
     print('save 1.model done')
     return model

@@ -33,7 +33,7 @@ class Map:
 
         for i in range(len(point_list)):
             # plt.text(point_list[i], point_list[i, 1], i)
-            plt.annotate(str(i), xy=(point_list[i][0], point_list[i][1]), xytext=(point_list[i][0] + 0.001, point_list[i][1] + 0.001))
+            plt.annotate(str(i), xy=(point_list[i][0], point_list[i][1]), xytext=(point_list[i][0], point_list[i][1]))
 
 
     def draw_line(self,point_list,flag_list):
