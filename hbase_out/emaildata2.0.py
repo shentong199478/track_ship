@@ -86,22 +86,21 @@ class EmailData2(object):
             source1 = 1 if str(sourcelist[i]) != '300' else -1
             source2 = 1 if str(sourcelist[i+1]) != '300' else -1
 
-            lon1 = (lonlist[i+1] - lonlist[i])*10000   #标记点和前一个点的经度差
-            lat1 = (latlist[i+1] - latlist[i])*10000   #标记点和前一个点的纬度差
-            lon2 = (lonlist[i+2] - lonlist[i+1])*10000   #标记点和后一个点的经度差
-            lat2 = (latlist[i+2] - latlist[i+1])*10000   #标记点和后一个点的纬度差
+            lon1 = (lonlist[i+1] - lonlist[i])*10000/time1   #标记点和前一个点的经度差
+            lat1 = (latlist[i+1] - latlist[i])*10000/time1   #标记点和前一个点的纬度差
+            lon2 = (lonlist[i+2] - lonlist[i+1])*10000/time2   #标记点和后一个点的经度差
+            lat2 = (latlist[i+2] - latlist[i+1])*10000/time2   #标记点和后一个点的纬度差
             ang1 = self.angles(lonlist[i], latlist[i], lonlist[i + 1], latlist[i + 1])  # 目标点和前一个点的坐标角度
             ang2 = self.angles(lonlist[i+1], latlist[i+1], lonlist[i+2], latlist[i+2])  # 目标点后一个点和目标点的坐标角度
             thead1 = self.get_angle(theadlist[i],ang1) #目标点前一个点航首向和角度差
             thead2 = self.get_angle(theadlist[i+1],ang1) #目标点航首向和角度差
             thead3 = self.get_angle(theadlist[i+1], ang2)  # 目标点航首向和角度差
             thead4 = self.get_angle(theadlist[i+2], ang2)  # 目标点后一个点航首向和角度差
-            # thead1 = theadlist[i]
-            # thead2 = theadlist[i+1]
-            # thead3 = theadlist[i+2]
-            sog1 = soglist[i]  #目标点前一个点的航速
-            sog2 = soglist[i+1] #目标点的航速
-            sog3 = soglist[i+2] #目标点后一个点的航速
+            # sog1 = soglist[i]  #目标点前一个点的航速
+            # sog2 = soglist[i+1] #目标点的航速
+            # sog3 = soglist[i+2] #目标点后一个点的航速
+            sog1 = soglist[i+1] - soglist[i]
+            sog2 = soglist[i+2] - soglist[i+1]
             # cog1 = coglist[i]      #目标点前一个点的航迹向
             # cog2 = coglist[i+1]    #目标点的航迹向
             # cog3 = coglist[i+2]    #目标点后一个点的航迹向
@@ -113,7 +112,7 @@ class EmailData2(object):
                 l = 1
             else:
                 l = -1
-            point_list.append([time1,time2,source1,source2,lon1,lat1,lon2,lat2,thead1,thead2,thead3,thead4,sog1,sog2,sog3,last_is_ture,l,index[i+1]])
+            point_list.append([source1,source2,lon1,lat1,lon2,lat2,ang1,ang2,thead1,thead2,thead3,thead4,sog1,sog2,last_is_ture,l,index[i+1]])
         return point_list
 
     def get_point(self):
@@ -128,10 +127,10 @@ def read_excel():
 if __name__ == '__main__':
     res1,res2 = read_excel()
     a = ExcelTools()
-    book_name_xls = r'data\邮箱标签数据222.xls'
-    sheet_name_xls = '邮箱数据222'
-    value_title = [["time", "time2", "source1", "source2", "lon1", "lat1", "lon2", "lat2", "thead1", "thead2", "thead3","thead4", "sog1", \
-        "sog2", "sog3", "last_is_ture", "predict", "index"], ]
+    book_name_xls = r'data\邮箱标签数据3.xls'
+    sheet_name_xls = '邮箱数据3'
+    value_title = [[ "source1", "source2", "lon1", "lat1", "lon2", "lat2","ang1","ang2", "thead1", "thead2", "thead3","thead4", "sog1", \
+        "sog2", "last_is_ture", "predict", "index"], ]
     a.write_excel_xls(book_name_xls, sheet_name_xls, value_title)
 
     for i in range(len(res1)):

@@ -35,7 +35,7 @@ mpl.rcParams["axes.unicode_minus"] = False
 # Y = datas[names[10]]
 
 
-X, Y = get_labeldata()
+X, Y = get_labeldata1()
 # 划分训练集与测试集
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
 
@@ -67,10 +67,10 @@ print(re.predict_proba(X_test))  # sigmoid函数转化的值，即：概率p
 # 模型的保存与持久化
 from sklearn.externals import joblib
 
-joblib.dump(ss, "logistic_ss2.model")  # 将标准化模型保存
-joblib.dump(lr, "logistic_lr2.model")  # 将训练后的线性模型保存
-joblib.load("logistic_ss2.model")  # 加载模型,会保存该model文件
-joblib.load("logistic_lr2.model")
+joblib.dump(ss, "logistic_ss4.model")  # 将标准化模型保存
+joblib.dump(lr, "logistic_lr4.model")  # 将训练后的线性模型保存
+joblib.load("logistic_ss4.model")  # 加载模型,会保存该model文件
+joblib.load("logistic_lr4.model")
 
 # 预测
 print(X_test)

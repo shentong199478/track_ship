@@ -22,13 +22,13 @@ class HbaseZS:
         ed = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         # 先获得时间数组格式的日期
-        threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 2))
+        threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 22))
         # 转换为时间戳
         # timeStamp = int(time.mktime(threeDayAgo.timetuple()))
         # 转换为其他字符串格式
         bg = threeDayAgo.strftime("%Y-%m-%d %H:%M:%S")
-        bg = '2019-12-01 00:00:00'
-        ed = '2019-12-10 00:00:00'
+        # bg = '2019-11-20 00:00:00'
+        # ed = '2019-11-30 00:00:00'
         bg = BTime.from_str(bg)
         ed = BTime.from_str(ed)
 
@@ -75,8 +75,10 @@ if __name__ == '__main__':
     #
     #
     #
-    bg = time_util.BTime.from_str("2019-11-13 13:14:00")
-    ed = time_util.BTime.from_str("2019-12-02 11:00:00")
+    # bg = time_util.BTime.from_str("2019-12-11 13:14:00")
+    # ed = time_util.BTime.from_str("2019-12-12 11:00:00")
+    bg = time_util.BTime.from_str("2019-12-11 20:14:00")
+    ed = time_util.BTime.from_str("2019-12-12 16:00:00")
     # # print(bg)
     # # print(type(bg))
     # ed = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -99,7 +101,7 @@ if __name__ == '__main__':
     mmsi_list = [477752100, 477752200, 477181700, 477942400, 477454300, 477548400, 477167300, 414436000, 477150500, 413828000, 565003000, 574375000, 419001327, 477686500,
                 372632000, 636015455, 538004459, 564290000, 538004367, 538004243, 477264400, 477435100, 353242000, 563077300,419001333]
 
-    for row in a.get(477752100,bg,ed):
+    for row in a.get(538004459,bg,ed):
         print(row)
 
     #写入excel
