@@ -46,15 +46,15 @@ def get_labeldata():
     yangben = np.vstack((zheng,fu))
     permutation = np.random.permutation(yangben.shape[0])
     shuffled_dataset = yangben[permutation]
-    data = shuffled_dataset[:,:16]
+    data = shuffled_dataset[:,:15]
     label =shuffled_dataset[:,-1]
     return data,label
 
 def get_labeldata1():
-    x = pd. read_excel(r"D:\shentong\track_ship\labeldata\正样本3.xlsx")
+    x = pd. read_excel(r"D:\shentong\track_ship\labeldata\正样本4.xlsx")
     zheng = x[['source1','source2','lon1','lat1','lon2','lat2',"ang1",'ang2','thead1','thead2',\
         'thead3','thead4','sog1','sog2','last_is_ture','predict']].values
-    count = range(398)
+    count = range(367)
     num = random.sample(count, 133)
     # num = random.sample(count, 133)
 
@@ -63,7 +63,7 @@ def get_labeldata1():
     # zheng = zheng[1:501]
 
 
-    x = pd.read_excel(r'D:\shentong\track_ship\labeldata\负样本3.xlsx')
+    x = pd.read_excel(r'D:\shentong\track_ship\labeldata\负样本4.xlsx')
     b = x[['source1','source2','lon1','lat1','lon2','lat2',"ang1",'ang2','thead1','thead2',\
         'thead3','thead4','sog1','sog2','last_is_ture','predict']].values
 
@@ -87,7 +87,7 @@ def get_labeldata1():
     yangben = np.vstack((zheng,fu))
     permutation = np.random.permutation(yangben.shape[0])
     shuffled_dataset = yangben[permutation]
-    data = shuffled_dataset[:,:15]
+    data = shuffled_dataset[:,:16]
     label =shuffled_dataset[:,-1]
     return data,label
 

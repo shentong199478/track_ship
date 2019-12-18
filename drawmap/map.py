@@ -1,6 +1,7 @@
 from mpl_toolkits.basemap import Basemap
 import numpy as np
 import matplotlib.pyplot as plt
+import  time
 
 class Map:
     def __init__(self):
@@ -47,6 +48,9 @@ class Map:
 
     def show(self):
         plt.show()
+        # plt.ion()
+        # plt.pause(20)
+        # plt.close
 
 if __name__ == '__main__':
     m = Map()
@@ -54,6 +58,7 @@ if __name__ == '__main__':
     m.draw_point([[06.886795,-6.097192],[06.79231,-6.1132]],[])
     m.draw_line([(06.886795,-6.097192),(06.79231,-6.1132)],[])
     m.show()
+
 
 
 

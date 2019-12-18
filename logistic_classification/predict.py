@@ -147,16 +147,17 @@ class LogisticClassifition:
         count = len(lis)
         for i in range(count):
             for j in range(len(lis[i])):
-                if j in [1,2,3,4,6,7,8] and not lis[i][j]:
+                if j in [1,2,3,4,6,7] and not lis[i][j]:
                     if i != 0:
                         lis[i][j] = lis[i-1][j]
                     else:
                         lis[i][j] = lis[i+1][j]
+
             time_date = int(lis[i][7])
             source = int(lis[i][1])
             lon = float(lis[i][4])
             lat = float(lis[i][3])
-            thead = float(lis[i][8])
+            thead = float(lis[i][8] if lis[i][8] else lis[i][2])
             sog = float(lis[i][6])
             cog = float(lis[i][2])
             res_dic['feature'].append({'time': time_date, 'source': source, 'lon': lon, 'lat': lat, 'thead': thead, 'sog': sog, 'cog': cog})
@@ -167,21 +168,33 @@ class LogisticClassifition:
                 res_dic['predict'].append(-1)
             else:
                 features = self.get_feature(res_dic['feature'][i-1],res_dic['feature'][i],res_dic['feature'][i+1],res_dic['predict'][i-1])
-                print(i,features)
+                # print(i,features)
                 a,b = self.predict(np.array([features]))
-                a = int(a[0])
-                if i == 500:
-                    print(b)
-                if a == 1 and b[0][1] <= 0.5:
-                    a = -1
 
-                res_dic['predict'].append(a if int(res_dic['feature'][i]['sog']) > 3 and features[0] < 7200 else -1)
+                a = int(a[0])
+                # if a == 1 and b[0][1] <= 0.85:
+                #     a = -1
+
+                if a == 1 and  int(res_dic['feature'][i]['sog']) > 1 and int(res_dic['feature'][i]['time'] - res_dic['feature'][i-1]['time'] ) < 7200: #
+
+                    timeArray = time.localtime(res_dic['feature'][i]['time'])
+                    otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
+                    # print(otherStyleTime)
+
+                res_dic['predict'].append(a if int(res_dic['feature'][i]['sog']) > 1 and int(res_dic['feature'][i]['time'] - res_dic['feature'][i-1]['time'] ) < 7200 else -1) #
                 # print('%s   %s  %s' % (i,features,self.predict_proba(np.array([features]))))
                 # if a == 1 and int(res_dic['feature'][i]['sog']) > 3 and features[0] < 7200:
                 #     print("%s  %s" % (i,features))
-                # res_dic['zhixin'].append(self.clf.predict_proba([features]))
-                # if i in [126, 272, 274, 301, 304, 310, 314, 319, 321, 331, 343, 344, 345, 347, 367, 370, 383, 391, 393]:
-                #     print(i,a, b)
+                if i in range(200,400):
+                    print('*',i,'*')
+                    print(features)
+                    print(time.strftime("%Y-%m-%d %H:%M:%S",  time.localtime(res_dic['feature'][i]['time'])))
+                    print(res_dic['feature'][i],'***',res_dic['feature'][i-1],'***',res_dic['feature'][i+1])
+                    # print(res_dic['feature'][i]['sog'])
+                    # print(res_dic['feature'][i]['source'])
+                    # print(res_dic['feature'][i]['lon'])
+                    # print(res_dic['feature'][i]['lat'])
+
         return res_dic
 
 
@@ -199,22 +212,22 @@ if __name__ == '__main__':
 
 
     for i in mmsi_list:
-        i = 538004459
-        # i = 477181700
+        # if i in [477752100,413828000,565003000,372632000,564290000,538004367,477752200,477181700]:
+        #     continue
+        i = 215218000
         print(i)
         res = hbase_out.get_data_from_zs(i)
         if len(res) < 3:
             continue
         res_list = list()
         point_list = list()
-        print(len(res))
         for row in res:
             res_list.append([row['mmsi'],row['source'],row['cog'],row['latitude'],row['longitude'],row['rot'],row['sog'],row['time'],row['trueHeading']])
             point_list.append([float(row['longitude']),float(row['latitude'])])
         point_dic = log.predict_list(res_list)
-
+        print(len(res))
         start = 200
-        end = 245
+        end = 400
         index_list = list(i[0] for i in list(enumerate(point_dic['predict'])) if i[1] == 1)
         zhixin_list = list()
         c = []
@@ -222,7 +235,7 @@ if __name__ == '__main__':
         for k in range(start,end):
             if k in index_list:
                 c.append(k-start)
-        print(c)
+        # print(c)
 
         #-----------
         # for j in list(enumerate(res[start:end])):
@@ -233,9 +246,10 @@ if __name__ == '__main__':
         #         otherStyleTime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
         #         print("%s  %s" % (j[0],otherStyleTime))
         #-----------
+        # if c:
         m.draw_point(point_list[start:end],c)
-        for j in list(enumerate(res[start:end])):
-            print('%s time:%s  lon:%s  lat:%s  sog:%s  source:%s' % (j[0],j[1]['time'],j[1]['longitude'],j[1]['latitude'],j[1]['sog'],j[1]['source']))
+        # for j in list(enumerate(res[start:end])):
+        #     print('%s time:%s  lon:%s  lat:%s  sog:%s  source:%s' % (j[0],j[1]['time'],j[1]['longitude'],j[1]['latitude'],j[1]['sog'],j[1]['source']))
         m.draw_line(point_list[start:end],c)
         m.show()
         break

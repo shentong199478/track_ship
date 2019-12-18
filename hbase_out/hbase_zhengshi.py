@@ -22,13 +22,13 @@ class HbaseZS:
         ed = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
         # 先获得时间数组格式的日期
-        threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 22))
+        threeDayAgo = (datetime.datetime.now() - datetime.timedelta(days = 2))
         # 转换为时间戳
         # timeStamp = int(time.mktime(threeDayAgo.timetuple()))
         # 转换为其他字符串格式
         bg = threeDayAgo.strftime("%Y-%m-%d %H:%M:%S")
-        # bg = '2019-11-20 00:00:00'
-        # ed = '2019-11-30 00:00:00'
+        bg = '2019-12-13 00:00:00'
+        ed = '2019-12-18 00:00:00'
         bg = BTime.from_str(bg)
         ed = BTime.from_str(ed)
 

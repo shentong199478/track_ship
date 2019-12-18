@@ -67,10 +67,10 @@ print(re.predict_proba(X_test))  # sigmoid函数转化的值，即：概率p
 # 模型的保存与持久化
 from sklearn.externals import joblib
 
-joblib.dump(ss, "logistic_ss4.model")  # 将标准化模型保存
-joblib.dump(lr, "logistic_lr4.model")  # 将训练后的线性模型保存
-joblib.load("logistic_ss4.model")  # 加载模型,会保存该model文件
-joblib.load("logistic_lr4.model")
+joblib.dump(ss, "logistic_ss5.model")  # 将标准化模型保存
+joblib.dump(lr, "logistic_lr5.model")  # 将训练后的线性模型保存
+joblib.load("logistic_ss5.model")  # 加载模型,会保存该model文件
+joblib.load("logistic_lr5.model")
 
 # 预测
 print(X_test)
